@@ -149,8 +149,9 @@ function Sidebar({
                     <button
                         className="btn btn-primary"
                         onClick={runAlgorithm}
+                        disabled={started}
                     >
-                        ▶ Run
+                        {running ? "⏳ Running..." : "▶ Run"}
                     </button>
 
                     <button
@@ -169,6 +170,7 @@ function Sidebar({
                     <button
                         className="btn btn-error col-span-2"
                         onClick={resetAnimation}
+                        disabled={!started}
                     >
                         🔄 Reset
                     </button>

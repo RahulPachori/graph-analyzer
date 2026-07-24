@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import GraphCanvas from "./components/GraphCanvas";
-import BottomPanel from "./components/BottomPanel";
+import RightPanel from "./components/RightPanel";
 import { parseGraph } from "./utils/parseGraph";
 import { applyFrame } from "./animation/animationEngine";
 import {
@@ -311,7 +311,7 @@ function App() {
       >
 
         <Panel
-          defaultSize={22}
+          defaultSize={20}
           minSize={16}
           maxSize={35}
         >
@@ -340,7 +340,7 @@ function App() {
         <PanelResizeHandle className="resize-handle" />
 
         <Panel
-          defaultSize={53}
+          defaultSize={45}
           minSize={30}
         >
           <GraphCanvas
@@ -357,11 +357,11 @@ function App() {
         <PanelResizeHandle className="resize-handle" />
 
         <Panel
-          defaultSize={25}
+          defaultSize={35}
           minSize={18}
           maxSize={40}
         >
-          <BottomPanel
+          <RightPanel
             algorithm={algorithm}
             queue={queue}
             logs={logs}

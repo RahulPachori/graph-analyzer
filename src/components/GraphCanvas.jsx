@@ -7,6 +7,7 @@ import {
 } from "@xyflow/react";
 import GraphNode from "./GraphNode";
 import { useEffect } from "react";
+import { ScanSearch } from "lucide-react";
 
 function FitGraphButton() {
     const { fitView } = useReactFlow();
@@ -14,15 +15,16 @@ function FitGraphButton() {
     return (
         <div className="absolute top-3 right-3 z-50">
             <button
-                className="btn btn-sm btn-primary"
+                className="btn btn-circle btn-sm btn-ghost bg-base-100/80 backdrop-blur shadow"
                 onClick={() =>
                     fitView({
                         padding: 0.2,
                         duration: 500,
                     })
                 }
+                title="Fit Graph"
             >
-                📐 Fit Graph
+                <ScanSearch size={18} />
             </button>
         </div>
     );
