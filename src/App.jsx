@@ -5,6 +5,8 @@ import GraphCanvas from "./components/GraphCanvas";
 import RightPanel from "./components/RightPanel";
 import { parseGraph } from "./utils/parseGraph";
 import { applyFrame } from "./animation/animationEngine";
+import SplashScreen from "./components/SplashScreen";
+import { AnimatePresence ,motion} from "framer-motion";
 import {
   Panel,
   PanelGroup,
@@ -23,32 +25,26 @@ import { floydWarshall } from "./algorithms/floydWarshall";
 
 function App() {
 
-  const [graphInput, setGraphInput] = useState(`15
-24
+  const [graphInput, setGraphInput] = useState(`6
+8
 1 2 4
 1 3 2
-1 4 7
-2 5 3
-2 6 8
-3 6 1
-3 7 6
-4 7 2
-4 8 5
-5 9 4
-5 10 7
-6 9 2
-6 11 5
-7 11 3
-7 12 8
-8 12 4
-8 13 6
-9 14 5
-10 14 3
-10 15 9
-11 15 2
-12 15 4
-13 15 7
-14 15 1`);
+2 3 1
+2 4 5
+3 5 3
+5 4 2
+4 6 4
+5 6 6`);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const [weighted, setWeighted] = useState(true);
   const [directed, setDirected] = useState(true);
@@ -82,6 +78,7 @@ function App() {
 
   const [matrix, setMatrix] = useState([]);
 
+  
   function clearAnimationState() {
 
     setRunning(false);
@@ -299,81 +296,104 @@ function App() {
 
   }, [running, frameIndex, frames]);
 
+
+
   return (
-
-    <div className="h-screen flex flex-col bg-base-100 text-base-content">
-
-      <Navbar />
-
-      <PanelGroup
-        direction="horizontal"
-        className="flex-1 overflow-hidden"
-      >
-
-        <Panel
-          defaultSize={20}
-          minSize={16}
-          maxSize={35}
+    
+    <>
+        <motion.div
+            initial={{
+                opacity: 0,
+                scale: 0.97,
+            }}
+            animate={{
+                opacity: 1,
+                scale: 1,
+            }}
+            transition={{
+                duration: 0.5,
+                delay: 1.55,
+            }}
         >
-          <Sidebar
-            graphInput={graphInput}
-            setGraphInput={setGraphInput}
-            weighted={weighted}
-            setWeighted={setWeighted}
-            directed={directed}
-            setDirected={setDirected}
-            updateGraph={updateGraph}
-            source={source}
-            setSource={setSource}
-            runAlgorithm={runAlgorithm}
-            toggleAnimation={toggleAnimation}
-            resetAnimation={resetAnimation}
-            running={running}
-            started={started}
-            algorithm={algorithm}
-            setAlgorithm={setAlgorithm}
-            destination={destination}
-            setDestination={setDestination}
-          />
-        </Panel>
+        <div className="h-screen flex flex-col bg-base-100 text-base-content">
 
-        <PanelResizeHandle className="resize-handle" />
+          <Navbar />
 
-        <Panel
-          defaultSize={45}
-          minSize={30}
-        >
-          <GraphCanvas
-            nodes={nodes}
-            edges={edges}
-            activeNodes={activeNodes}
-            activeEdges={activeEdges}
-            visitedNodes={visitedNodes}
-            visitedEdges={visitedEdges}
-            directed={directed}
-          />
-        </Panel>
+          <PanelGroup
+            direction="horizontal"
+            className="flex-1 overflow-hidden"
+          >
 
-        <PanelResizeHandle className="resize-handle" />
+            <Panel
+              defaultSize={20}
+              minSize={16}
+              maxSize={35}
+            >
+              <Sidebar
+                graphInput={graphInput}
+                setGraphInput={setGraphInput}
+                weighted={weighted}
+                setWeighted={setWeighted}
+                directed={directed}
+                setDirected={setDirected}
+                updateGraph={updateGraph}
+                source={source}
+                setSource={setSource}
+                runAlgorithm={runAlgorithm}
+                toggleAnimation={toggleAnimation}
+                resetAnimation={resetAnimation}
+                running={running}
+                started={started}
+                algorithm={algorithm}
+                setAlgorithm={setAlgorithm}
+                destination={destination}
+                setDestination={setDestination}
+              />
+            </Panel>
 
-        <Panel
-          defaultSize={35}
-          minSize={18}
-          maxSize={40}
-        >
-          <RightPanel
-            algorithm={algorithm}
-            queue={queue}
-            logs={logs}
-            output={output}
-            matrix={matrix}
-          />
-        </Panel>
+            <PanelResizeHandle className="resize-handle" />
 
-      </PanelGroup>
+            <Panel
+              defaultSize={45}
+              minSize={30}
+            >
+              <GraphCanvas
+                nodes={nodes}
+                edges={edges}
+                activeNodes={activeNodes}
+                activeEdges={activeEdges}
+                visitedNodes={visitedNodes}
+                visitedEdges={visitedEdges}
+                directed={directed}
+              />
+            </Panel>
 
-    </div>
+            <PanelResizeHandle className="resize-handle" />
 
+            <Panel
+              defaultSize={35}
+              minSize={18}
+              maxSize={40}
+            >
+              <RightPanel
+                algorithm={algorithm}
+                queue={queue}
+                logs={logs}
+                output={output}
+                matrix={matrix}
+              />
+            </Panel>
+
+          </PanelGroup>
+
+        </div>
+        </motion.div>
+
+        <AnimatePresence mode="wait">
+            {loading && <SplashScreen />}
+        </AnimatePresence>
+    </>
+    
   );
 
 }
