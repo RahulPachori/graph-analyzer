@@ -4,7 +4,7 @@ import "./index.css";
 import "@xyflow/react/dist/style.css";
 import App from "./App.jsx";
 
-const theme = localStorage.getItem("theme") || "light";
+const theme = localStorage.getItem("theme") || "dark";
 document.documentElement.setAttribute("data-theme", theme);
 createRoot(document.getElementById("root")).render(
   <StrictMode>

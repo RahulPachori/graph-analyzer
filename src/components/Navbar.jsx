@@ -38,7 +38,7 @@ const themes = [
 
 function Navbar() {
     const [theme, setTheme] = useState(
-        localStorage.getItem("theme") || "light"
+        localStorage.getItem("theme") || "dark"
     );
 
     useEffect(() => {
