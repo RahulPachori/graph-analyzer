@@ -1,0 +1,37 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "daisyui" {
+  themes: all;
+}
+.react-flow__controls {
+  background: var(--fallback-b1, oklch(var(--b1)));
+  border-radius: 12px;
+}
+
+.resize-handle {
+  width: 8px;
+  background-color: transparent;
+  cursor: col-resize;
+  position: relative;
+  transition: background-color 0.2s;
+}
+
+.resize-handle:hover {
+  background-color: hsl(var(--p));
+}
+
+.resize-handle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 3px;
+  height: 48px;
+  border-radius: 9999px;
+  background: hsl(var(--bc) / 0.25);
+  transform: translate(-50%, -50%);
+}
+
+.resize-handle:hover::after {
+  background: white;
+}
