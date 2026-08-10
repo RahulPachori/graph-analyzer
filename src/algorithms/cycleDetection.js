@@ -5,7 +5,6 @@ export function cycleDetection(adj, directed) {
     }
 
     return undirectedCycle(adj);
-
 }
 
 function undirectedCycle(adj) {
@@ -18,6 +17,15 @@ function undirectedCycle(adj) {
     const frames = [];
 
     let found = false;
+
+    frames.push({
+        actions: [],
+        queue: [],
+        visited: [],
+        logs: [
+            "Using DFS with parent tracking for undirected cycle detection."
+        ]
+    });
 
     function dfs(u, p) {
 
@@ -154,6 +162,15 @@ function directedCycle(adj) {
     const frames = [];
 
     let found = false;
+
+    frames.push({
+        actions: [],
+        queue: [],
+        visited: [],
+        logs: [
+            "Using DFS with recursion stack for directed cycle detection."
+        ]
+    });
 
     function dfs(u) {
 

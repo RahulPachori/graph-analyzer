@@ -215,7 +215,7 @@ function App() {
         break;
 
       case "components":
-        ans = connectedComponents(graph.adj);
+        ans = connectedComponents(graph.adj,directed);
         break;
 
       case "floydwarshall":
@@ -264,13 +264,14 @@ function App() {
 
       const frame = frames[frameIndex];
 
-      setQueue(frame.queue);
-      setVisited(frame.visited);
 
       setLogs(prev => [
         ...prev,
         ...frame.logs,
       ]);
+
+      setQueue(frame.queue);
+      setVisited(frame.visited);
 
       const state = applyFrame(frame);
 
@@ -290,7 +291,7 @@ function App() {
 
       setFrameIndex(prev => prev + 1);
 
-    }, 700);
+    }, 1000);
 
     return () => clearTimeout(t);
 

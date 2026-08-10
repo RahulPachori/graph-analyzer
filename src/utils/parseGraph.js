@@ -23,7 +23,7 @@ export function parseGraph(input, weighted, directed) {
                 x: 0,
                 y: 0,
             },
-            data: {
+            data: { 
                 label: String(i),
             },
         });

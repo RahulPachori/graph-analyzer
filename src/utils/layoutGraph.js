@@ -4,8 +4,8 @@ const g = new dagre.graphlib.Graph();
 
 g.setDefaultEdgeLabel(() => ({}));
 
-const NODE_WIDTH = 50;
-const NODE_HEIGHT = 50;
+const NODE_WIDTH = 40;
+const NODE_HEIGHT = 40;
 
 export function layoutGraph(nodes, edges, direction = "TB") {
     g.setGraph({
@@ -39,3 +39,5 @@ export function layoutGraph(nodes, edges, direction = "TB") {
         };
     });
 }
+
+

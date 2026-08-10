@@ -1,4 +1,4 @@
-export function connectedComponents(adj) {
+export function connectedComponents(adj, directed) {
 
     const n = adj.length;
 
@@ -12,6 +12,40 @@ export function connectedComponents(adj) {
 
     let comp = 0;
 
+    frames.push({
+        actions: [],
+        queue: [],
+        visited: [],
+        logs: [
+            directed
+                ? "Graph is directed. Ignoring edge directions and finding connected components."
+                : "Graph is undirected. Using DFS to find connected components."
+        ]
+    });
+
+    let g = adj;
+
+    if (directed) {
+
+        g = Array.from({ length: n }, () => []);
+
+        for (let u = 1; u < n; u++) {
+
+            for (const e of adj[u]) {
+
+                const v = e.to;
+
+                g[u].push({
+                    to: v
+                });
+
+                g[v].push({
+                    to: u
+                });
+            }
+        }
+    }
+
     function dfs(u) {
 
         vis[u] = true;
@@ -21,62 +55,50 @@ export function connectedComponents(adj) {
         comps[comp].push(u);
 
         frames.push({
-
             actions: [
-
                 {
                     type: "visitNode",
                     node: u,
                 }
-
             ],
 
             queue: [...st],
 
-            visited: [],
+            visited: [...comps[comp]],
 
             logs: [
                 `Visited node ${u} (Component ${comp + 1})`
             ]
-
         });
 
-        for (const e of adj[u]) {
+        for (const e of g[u]) {
 
             const v = e.to;
 
             frames.push({
-
                 actions: [
-
                     {
                         type: "visitEdge",
                         from: u,
                         to: v,
                     }
-
                 ],
 
                 queue: [...st],
 
-                visited: [],
+                visited: [...comps[comp]],
 
                 logs: [
-                    `Traversing edge ${u} → ${v}`
+                    `Traversing edge ${u} — ${v}`
                 ]
-
             });
 
             if (!vis[v]) {
-
                 dfs(v);
-
             }
-
         }
 
         st.pop();
-
     }
 
     for (let i = 1; i < n; i++) {
@@ -86,25 +108,18 @@ export function connectedComponents(adj) {
             comps.push([]);
 
             frames.push({
-
                 actions: [],
-
                 queue: [],
-
                 visited: [],
-
                 logs: [
                     `Starting Component ${comp + 1}`
                 ]
-
             });
 
             dfs(i);
 
             comp++;
-
         }
-
     }
 
     return {
@@ -120,11 +135,12 @@ export function connectedComponents(adj) {
 
             {
                 label: "Components",
-                value: comps.map(c => `{ ${c.join(", ")} }`),
+                value: comps.map(
+                    c => `{ ${c.join(", ")} }`
+                ),
             }
 
         ],
 
     };
-
 }
